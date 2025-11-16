@@ -9,9 +9,11 @@ QnQ is an interactive terminal-based application built with Go that provides a b
 
 ## ✨ Features
 
-- 🎨 **Interactive TUI** - Beautiful terminal interface powered by Bubble Tea
+- 🎨 **Interactive TUI** - Beautiful full-screen terminal interface powered by Bubble Tea
+- 🌈 **Stylish Design** - Color-coded elements with Lip Gloss styling
 - ⚙️ **Configuration Management** - Flexible config with Viper
 - ⌨️ **Keyboard-Driven** - Efficient navigation with vim-style keys
+- 📱 **Responsive** - Adapts to terminal size and handles resizing
 - 🔧 **Extensible** - Easy to add new commands and features
 - 🚀 **Fast & Lightweight** - Written in Go for maximum performance
 
@@ -52,27 +54,35 @@ Comprehensive documentation is available in the [`docs/`](./docs) directory:
 
 ### Interactive Mode
 
-Simply run `qnq` to launch the interactive interface:
+Simply run `qnq` to launch the full-screen interactive interface:
 
 ```bash
 ./qnq
 ```
 
-You'll see a menu-driven interface:
+The application takes over your entire terminal with a beautiful interface:
 
 ```
-QnQ - Command & Conquer DevOps Center
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ QnQ - Command & Conquer DevOps Center
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-What would you like to do?
+  What would you like to do?
 
-> [ ] Server
-  [ ] Client
-  [ ] Config
-  [ ] Exit
+  ▶ [ ] Server
+    [ ] Client
+    [ ] Config
+    [ ] Exit
 
-Press q to quit.
-Use arrow keys or j/k to navigate, enter/space to select.
+  ↑/k: up • ↓/j: down • enter/space: select • q/ctrl+c: quit
 ```
+
+Features:
+- **Full-screen mode** with alternate screen buffer
+- **Purple-themed** title bar and cursor
+- **Green checkmarks** for selected items
+- **Centered content** that adapts to your terminal size
+- **Preserved history** - your terminal is restored on exit
 
 ### Keyboard Controls
 

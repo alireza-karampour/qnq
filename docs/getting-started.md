@@ -41,21 +41,29 @@ go install github.com/alireza-karampour/qnq@latest
 
 ## First Run
 
-When you run QnQ for the first time, you'll see an interactive menu:
+When you run QnQ for the first time, the application will take over your entire terminal screen with a beautiful, interactive interface:
 
 ```
-QnQ - Command & Conquer DevOps Center
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ QnQ - Command & Conquer DevOps Center
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-What would you like to do?
+  What would you like to do?
 
-> [ ] Server
-  [ ] Client
-  [ ] Config
-  [ ] Exit
+  ▶ [ ] Server
+    [ ] Client
+    [ ] Config
+    [ ] Exit
 
-Press q to quit.
-Use arrow keys or j/k to navigate, enter/space to select.
+  ↑/k: up • ↓/j: down • enter/space: select • q/ctrl+c: quit
 ```
+
+The interface features:
+- **Full-screen mode** - Uses the entire terminal
+- **Purple title bar** - Spanning the full width
+- **Centered content** - Vertically and horizontally aligned
+- **Color-coded elements** - Purple cursor, green checkmarks
+- **Responsive design** - Adapts to terminal resizing
 
 ### Navigation
 
@@ -115,9 +123,10 @@ QnQ supports various subcommands for specific tasks:
 ## Quick Tips
 
 1. **Terminal Compatibility**: QnQ works best with modern terminal emulators that support:
-   - Unicode characters
-   - ANSI color codes
+   - Unicode characters (for ▶ and ✓ symbols)
+   - ANSI color codes (for purple, green colors)
    - Keyboard input handling
+   - Alternate screen buffer (for full-screen mode)
 
 2. **Recommended Terminals**:
    - Linux: GNOME Terminal, Konsole, Alacritty, Kitty
@@ -125,9 +134,15 @@ QnQ supports various subcommands for specific tasks:
    - Windows: Windows Terminal, ConEmu
 
 3. **Performance**: For the best experience, ensure your terminal is properly configured:
-   - Enable true color support if available
-   - Use a monospace font with good Unicode coverage
+   - Enable true color support (24-bit color)
+   - Use a monospace font with good Unicode coverage (e.g., Fira Code, JetBrains Mono)
    - Disable unnecessary terminal features that might interfere with TUI
+   - Ensure terminal size is at least 80x24 for optimal display
+
+4. **Full-Screen Mode**: QnQ uses alternate screen buffer, which means:
+   - Your terminal history is preserved
+   - Previous screen content is restored on exit
+   - The app takes over the entire terminal window
 
 ## Troubleshooting
 

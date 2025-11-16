@@ -36,6 +36,8 @@ type model struct {
     choices  []string           // Available menu options
     cursor   int                // Current cursor position
     selected map[int]struct{}   // Selected items
+    width    int                // Terminal width
+    height   int                // Terminal height
 }
 ```
 
@@ -44,6 +46,8 @@ type model struct {
 - **choices**: List of menu items displayed to the user
 - **cursor**: Zero-based index of the currently highlighted item
 - **selected**: Set of selected item indices (using empty struct for memory efficiency)
+- **width**: Current terminal width (updated on resize)
+- **height**: Current terminal height (updated on resize)
 
 ## Initialization
 
@@ -75,6 +79,22 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd)
 ```
 
 ### Message Types
+
+#### WindowSizeMsg
+
+Handles terminal resize events:
+
+```go
+case tea.WindowSizeMsg:
+    m.width = msg.Width
+    m.height = msg.Height
+    return m, nil
+```
+
+This message is sent:
+- On program start
+- When the terminal is resized
+- Allows responsive UI that adapts to screen size
 
 #### KeyMsg
 
@@ -165,14 +185,29 @@ for i, choice := range m.choices {
 ## Program Lifecycle
 
 ```go
-// Create program
-p := tea.NewProgram(initialModel())
+// Create program with full screen mode
+p := tea.NewProgram(
+    initialModel(),
+    tea.WithAltScreen(),       // Use alternate screen buffer
+    tea.WithMouseCellMotion(), // Enable mouse support
+)
 
 // Run program (blocks until quit)
 if _, err := p.Run(); err != nil {
     return fmt.Errorf("error running TUI: %w", err)
 }
 ```
+
+### Program Options
+
+- **`tea.WithAltScreen()`**: Uses the terminal's alternate screen buffer
+  - Preserves terminal history
+  - Restores previous screen on exit
+  - Provides full-screen experience
+  
+- **`tea.WithMouseCellMotion()`**: Enables mouse support
+  - Allows mouse clicks and movement tracking
+  - Enhances user interaction options
 
 ### Lifecycle Events
 
@@ -203,19 +238,54 @@ case "enter", " ":       // Select/Action
 - **Multiple quit options**: `q` and `Ctrl+C`
 - **Dual selection keys**: `Enter` and `Space`
 
-## Styling (Future Enhancement)
+## Styling with Lip Gloss
 
-Currently, the UI uses plain text. Future versions will use Lip Gloss for styling:
+The UI uses Lip Gloss for beautiful terminal styling:
 
 ```go
-// Example with Lip Gloss (not yet implemented)
 import "github.com/charmbracelet/lipgloss"
 
-var titleStyle = lipgloss.NewStyle().
+// Title bar style - full width with purple background
+titleStyle := lipgloss.NewStyle().
     Bold(true).
+    Foreground(lipgloss.Color("#FAFAFA")).
+    Background(lipgloss.Color("#7D56F4")).
+    Padding(0, 1).
+    Width(m.width)
+
+// Cursor style - purple and bold
+cursorStyle := lipgloss.NewStyle().
     Foreground(lipgloss.Color("#7D56F4")).
-    Background(lipgloss.Color("#1a1a1a")).
-    Padding(0, 1)
+    Bold(true)
+
+// Selected item style - green checkmark
+selectedStyle := lipgloss.NewStyle().
+    Foreground(lipgloss.Color("#00FF00")).
+    Bold(true)
+
+// Help text style - dimmed
+helpStyle := lipgloss.NewStyle().
+    Foreground(lipgloss.Color("#626262")).
+    MarginTop(2)
+```
+
+### Responsive Layout
+
+The UI adapts to terminal size:
+
+```go
+// Full-width title bar
+titleStyle.Width(m.width)
+
+// Vertical centering
+contentLines := strings.Count(menuContent, "\n") + 1
+topPadding := (m.height - contentLines) / 2
+
+// Fill remaining space for true full screen
+finalView := strings.Repeat("\n", topPadding) + menuContent
+if currentLines < m.height {
+    finalView += strings.Repeat("\n", m.height-currentLines)
+}
 ```
 
 ## Best Practices

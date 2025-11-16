@@ -18,15 +18,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Commands reference
   - UI implementation guide
   - Development guide
+- Full-screen mode with alternate screen buffer
+- Mouse support for enhanced interaction
+- Responsive layout that adapts to terminal size
+- Beautiful styling with Lip Gloss
+  - Purple-themed title bar
+  - Color-coded cursor and selections
+  - Dimmed help text
 
 ### Changed
 - Root command now launches interactive TUI instead of just initializing config
+- UI now uses full terminal screen with vertical centering
+- Enhanced visual appearance with colors and styling
 
 ### Technical Details
 - Integrated Bubble Tea v1.3.10 for terminal UI
+- Integrated Lip Gloss v1.1.0 for styling
 - Implemented Model-View-Update (MVU) pattern
 - Added keyboard navigation (arrow keys, vim-style j/k)
 - Added selection mechanism with visual feedback
+- Window resize handling for responsive UI
+- Alternate screen buffer preserves terminal history
+- Full-width title bar and centered content
 
 ## [0.0.1] - Initial Release
 
